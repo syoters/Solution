@@ -53,9 +53,7 @@ public class Main {
         System.out.println(Node.getDeCodeFromNode(codeStr, parentNode));
 //        System.out.println(Node.getDeCodeFromMap(codeStr, codeMap, sumFreq));
 
-
 //        Node.createTree(text);
-
     }
 
 }
