@@ -2,7 +2,7 @@
   <artifact type="jar" name="parametrizovannie:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/parametrizovannie_jar</output-path>
     <root id="archive" name="parametrizovannie.jar">
-      <element id="module-output" name="parametrizovannie" />
+      <element id="module-output" name="Solution" />
       <element id="extracted-dir" path="$PROJECT_DIR$/src/jsoup-1.14.3.jar" path-in-jar="/" />
     </root>
   </artifact>

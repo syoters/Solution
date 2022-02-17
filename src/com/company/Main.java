@@ -36,10 +36,6 @@ public class Main {
                 "In the evening, I often watch TV with my family and discuss my plans for the next day. On weekends, I often meet my friends or stay at home and read books. I like novels by Dariya Dontsova. I sometimes discuss her style and ideas with my sister. Literature, cooking, TV - I have a lot of topics to talk about and make new friends.";
 
         Map<String, String> codeMap = new HashMap<>();
-        final int m[] = {1, 2, 3, 4, 5};
-        m[0]++;
-        System.out.println(m[0]);
-
 
 //        try (Scanner in = new Scanner(System.in)) {
         try (Scanner in = new Scanner(new FileInputStream("res\\someFile0.txt"))) {
