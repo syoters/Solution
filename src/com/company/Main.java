@@ -37,32 +37,45 @@ public class Main {
             a = Arrays.stream(in.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
             b = Arrays.stream(in.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         }
-
 //        try (BufferedReader bf = new BufferedReader(new FileReader("test.txt"))) {
 //            a = Arrays.stream(bf.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 //            b = Arrays.stream(bf.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 //        }
-        System.out.println(Arrays.toString(a));
-
-        for (int i = 1; i < b.length; i++) {
-            int curNum = b[i];
-            System.out.print(find(curNum, a, 1, a.length - 1) + " ");
-        }
-        System.out.println();
-        for (int i = 1; i < b.length; i++) {
-            int curNum = b[i];
-            System.out.print(find1(curNum, a, 1, a.length - 1) + " ");
-        }
-        System.out.println();
-        System.out.println("тест по поиску всех чисел");
-        for (int i = 0; i < 15; i++) {
-            System.out.print(find(i, a, 1, a.length - 1) + " ");
-        }
-        System.out.println();
         for (int i = 0; i < 15; i++) {
             System.out.print(find1(i, a, 1, a.length - 1) + " ");
         }
         System.out.println();
+        System.out.println(Arrays.toString(a));
+        System.out.println();
+
+        int p[];
+        p = findSum(17, a, 1, a.length - 1);
+        System.out.println(Arrays.toString(p) + "\t" + a[p[0]] + " " + a[p[1]]);
+        p = findSumBin(17, a, 1, a.length - 1);
+        System.out.println(Arrays.toString(p) + "\t" + a[p[0]] + " " + a[p[1]]);
+
+    }
+
+    private int[] findSum(int value, int[] sortArray, int left, int right) {
+        while (right > left) {
+            int sum = sortArray[left] + sortArray[right];
+//            System.out.println(left + "\t" + right + "\t" + sum);  // отладка
+            if (sum == value) return new int[]{left, right};
+            if (sum < value) left++;
+            if (sum > value) right--;
+        }
+        return new int[]{-1, -1};
+    }
+
+    private int[] findSumBin(int value, int[] sortArray, int left, int right) {
+        while (right > left) {
+            int sum = sortArray[left] + sortArray[right];
+            System.out.println("[" + left + " " + right + "]\t" + sortArray[left] + " " + sortArray[right] + "\t" + sum);  // отладка
+            if (sum == value) return new int[]{left, right};
+            if (sum < value) left = (left + right) / 2;
+            if (sum > value) right = (left + right) / 2;
+        }
+        return new int[]{-1, -1};
     }
 
     private int find1(int value, int[] array, int left, int right) {
