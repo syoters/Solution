@@ -31,7 +31,7 @@ public class Main {
     }
 
     private void run() throws IOException {
-        int a[], b[];
+        int a[], b[], k = 13;
         try (Scanner in = new Scanner(new FileInputStream("test.txt"))) {
 //        try (Scanner in = new Scanner(System.in)) {
             a = Arrays.stream(in.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
@@ -42,36 +42,46 @@ public class Main {
 //            a = Arrays.stream(bf.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 //            b = Arrays.stream(bf.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 //        }
+        System.out.println(Arrays.toString(a));
 
         for (int i = 1; i < b.length; i++) {
             int curNum = b[i];
-            System.out.print(find(curNum, a, 1, a.length) + " ");
+            System.out.print(find(curNum, a, 1, a.length - 1) + " ");
         }
         System.out.println();
         for (int i = 1; i < b.length; i++) {
             int curNum = b[i];
-            System.out.print(find1(curNum, a, 1, a.length) + " ");
+            System.out.print(find1(curNum, a, 1, a.length - 1) + " ");
+        }
+        System.out.println();
+        System.out.println("тест по поиску всех чисел");
+        for (int i = 0; i < 15; i++) {
+            System.out.print(find(i, a, 1, a.length - 1) + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < 15; i++) {
+            System.out.print(find1(i, a, 1, a.length - 1) + " ");
         }
         System.out.println();
     }
 
     private int find1(int value, int[] array, int left, int right) {
-        while (right > left) {
+        while (right >= left) {
             int midpoint = (left + right) / 2;
             if (value == array[midpoint]) return midpoint;
 
-            if (array[midpoint] > value) right = midpoint;
+            if (array[midpoint] > value) right = midpoint - 1;
             if (array[midpoint] < value) left = midpoint + 1;
         }
         return -1;
     }
 
     private int find(int value, int[] array, int left, int right) {
-        if (right <= left) return -1;
+        if (right < left) return -1;
         int midpoint = (left + right) / 2;
         if (value == array[midpoint]) return midpoint;
 
-        if (array[midpoint] > value) return find(value, array, left, midpoint);
+        if (array[midpoint] > value) return find(value, array, left, midpoint - 1);
         if (array[midpoint] < value) return find(value, array, midpoint + 1, right);
 
         return -1;
