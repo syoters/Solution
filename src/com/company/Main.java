@@ -31,42 +31,26 @@ public class Main {
     }
 
     private void run() throws IOException {
-        TreeNode p = new TreeNode(1, new TreeNode(2), new TreeNode(3));
-        TreeNode q = new TreeNode(1, new TreeNode(2), new TreeNode(3));
-        TreeNode z = new TreeNode(1, new TreeNode(2), new TreeNode());
-        TreeNode z1 = new TreeNode(1, new TreeNode(), new TreeNode(2));
-
-        System.out.println(isSameTree(p, q));
-        System.out.println(isSameTree(p, z));
-        System.out.println(isSameTree(z, z1));
+        int i = -7;
+//        System.out.println(new int[]{5, 7, 1, 4}[(i + ((Math.abs((int) i / 4))+1) * 4) % 4]);
+        System.out.println(new int[]{5, 7, 1, 4}[(i + 4 * 5) % 4]);
+        System.out.println(Arrays.toString(decrypt(new int[]{5, 7, 1, 4}, 3)));
+        System.out.println(Arrays.toString(decrypt(new int[]{5, 7, 1, 4}, 0)));
+        System.out.println(Arrays.toString(decrypt(new int[]{2, 4, 9, 3}, -2)));
     }
 
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        if (p == null ^ q == null) return false;
-        return p == q || p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-    }
+    public int[] decrypt(int[] code, int k) {
+        int res[] = new int[code.length];
+        int zn = (k >= 0 ? 1 : -1);
 
-
-    // Definition for a binary tree node.
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode() {}
-
-        TreeNode(int val) {this.val = val;}
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
+        for (int i = 0; i < code.length; i++) {
+            int sum = 0;
+            for (int j = 0; j < k * zn; j++) {
+                sum += code[(i + zn * (j + 1) + code.length) % code.length];
+            }
+            res[i] = sum;
         }
-
-        @Override
-        public String toString() {
-            return String.format("[%d, %d, %d]", val, left.val, right.val);
-        }
+        return res;
     }
 
 }
