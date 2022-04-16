@@ -26,32 +26,42 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         long t = new Date().getTime();
-        new Main().run();
+//        new Main().run();
+        System.out.println(new Solution().isSubsequence("abc", "ahbgdc"));
+        System.out.println(new Solution().isSubsequence("axc", "ahbgdc"));
+        System.out.println(new Solution().isSubsequence("b", "abc"));
+        System.out.println(new Solution().isSubsequence("rjufvjafbxnbgriwgokdgqdqewn", "mjmqqjrmzkvhxlyruonekhhofpzzslupzojfuoztvzmmqvmlhgqxehojfowtrinbatjujaxekbcydldglkbxsqbbnrkhfdnpfbuaktupfftiljwpgglkjqunvithzlzpgikixqeuimmtbiskemplcvljqgvlzvnqxgedxqnznddkiujwhdefziydtquoudzxstpjjitmiimbjfgfjikkjycwgnpdxpeppsturjwkgnifinccvqzwlbmgpdaodzptyrjjkbqmgdrftfbwgimsmjpknuqtijrsnwvtytqqvookinzmkkkrkgwafohflvuedssukjgipgmypakhlckvizmqvycvbxhlljzejcaijqnfgobuhuiahtmxfzoplmmjfxtggwwxliplntkfuxjcnzcqsaagahbbneugiocexcfpszzomumfqpaiydssmihdoewahoswhlnpctjmkyufsvjlrflfiktndubnymenlmpyrhjxfdcq"));
         System.out.println(new Date().getTime() - t + " ms");
     }
 
     private void run() throws IOException {
-        int i = -7;
-//        System.out.println(new int[]{5, 7, 1, 4}[(i + ((Math.abs((int) i / 4))+1) * 4) % 4]);
-        System.out.println(new int[]{5, 7, 1, 4}[(i + 4 * 5) % 4]);
-        System.out.println(Arrays.toString(decrypt(new int[]{5, 7, 1, 4}, 3)));
-        System.out.println(Arrays.toString(decrypt(new int[]{5, 7, 1, 4}, 0)));
-        System.out.println(Arrays.toString(decrypt(new int[]{2, 4, 9, 3}, -2)));
+
     }
 
-    public int[] decrypt(int[] code, int k) {
-        int res[] = new int[code.length];
-        int zn = (k >= 0 ? 1 : -1);
+}
 
-        for (int i = 0; i < code.length; i++) {
-            int sum = 0;
-            for (int j = 0; j < k * zn; j++) {
-                sum += code[(i + zn * (j + 1) + code.length) % code.length];
-            }
-            res[i] = sum;
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if (s.isEmpty()) return true;
+        int is = 0;
+        for (int it = 0; it < t.length(); it++) {
+            if (s.charAt(is) == t.charAt(it)) is++;
+            if (is == s.length()) return true;
         }
-        return res;
+
+        return false;
     }
 
+
+    public boolean isSubsequence1(String s, String t) {
+        StringBuilder sb = new StringBuilder();
+//        sb.append("^");
+        for (int i = 0; i < s.length(); i++) {
+            sb.append(".*").append(s.charAt(i)).append("+");
+        }
+        sb.append(".*");
+
+        return t.matches(sb.toString());
+    }
 }
 
