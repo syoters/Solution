@@ -22,31 +22,18 @@ package com.company;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         long t = new Date().getTime();
 //        new Main().run();
-
-        RecentCounter recentCounter = new RecentCounter();
-        System.out.println(recentCounter.ping(1));
-        System.out.println(recentCounter.ping(100));
-        System.out.println(recentCounter.ping(3001));
-        System.out.println(recentCounter.ping(3002));
-        System.out.println(recentCounter.requests);
+        Solution solution = new Solution();
+        System.out.println(Arrays.toString(solution.findOcurrences("alice is a good girl she is a good student", "a", "good")));
+        System.out.println(Arrays.toString(solution.findOcurrences("we will we will rock you", "we", "will")));
 
         System.out.println(new Date().getTime() - t + " ms");
-    }
-
-    private int find(int value, int[] array, int left, int right) {
-        int midpoint = 0;
-        while (right >= left) {
-            midpoint = (left + right) / 2;
-            if (value == array[midpoint]) return midpoint;
-            if (array[midpoint] > value) right = midpoint - 1;
-            if (array[midpoint] < value) left = midpoint + 1;
-        }
-        return left;
     }
 
     private void run() throws IOException {
@@ -55,59 +42,26 @@ public class Main {
 
 }
 
-class RecentCounter {
-    int count = 0;
-    ArrayList<Integer> requests = new ArrayList<>();
-    Queue<Integer> q = new LinkedList<>();
+class Solution {
+    public String[] findOcurrences(String text, String first, String second) {
+        ArrayList<String> strings = new ArrayList<>();
 
-    public RecentCounter() {}
-
-    public int ping(int t) {
-        requests.add(t);
-        return requests.size() - find(t - 3000, requests, 0, requests.size() - 1);
-    }
-
-    // с запоминанием последней позиции, самый быстрый способ
-    public int ping_lifeHack(int t) {
-        while (count < requests.size() && requests.get(count) < t - 3000) count++;
-        requests.add(t);
-        return requests.size() - count;
-    }
-
-    // поиск через очередь(выпихиваем все элементы что не входят в наш интервал)
-    public int ping_Queue(int t) {
-        int rem = t - 3000;
-        q.add(t);
-        while (q.peek() < rem) q.remove();
-        return q.size();
-    }
-
-    //линейный перебор всего/ скользящее окно
-    public int ping_line(int t) {
-        requests.add(t);
-
-        int count = 0;
-        for (int i = requests.size() - 1; i >= 0; i--) {
-            if (requests.get(i) >= t - 3000 && requests.get(i) <= t) count++;
+        String[] words = text.split(" ");
+        for (int i = 0; i < words.length - 2; i++) {
+            if (words[i].equals(first) && words[i + 1].equals(second)) strings.add(words[i + 2]);
         }
-        return count;
+
+        return strings.toArray(new String[0]);
     }
 
-    // нечеткий поиск, возвращает индекс где ближе всего искомое значение(left right можно поигратся)
-    private int find(int value, ArrayList<Integer> array, int left, int right) {
-        while (right >= left) {
-            int midpoint = (left + right) / 2;
-            if (array.get(midpoint) == value) return midpoint;
-            if (array.get(midpoint) > value) right = midpoint - 1;
-            if (array.get(midpoint) < value) left = midpoint + 1;
-        }
-        return left;
+    //через regex не доделанно, не раб 2й пример
+    public String[] findOcurrences1(String text, String first, String second) {
+        ArrayList<String> strings = new ArrayList<>();
+        Pattern pattern = Pattern.compile(first + " " + second + " (\\S*)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) strings.add(matcher.group(1));
+
+        return strings.toArray(new String[0]);
     }
 }
-
-/**
- * Your RecentCounter object will be instantiated and called as such:
- * RecentCounter obj = new RecentCounter();
- * int param_1 = obj.ping(t);
- */
 
