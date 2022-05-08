@@ -28,11 +28,8 @@ public class Main {
         long t = new Date().getTime();
 //        new Main().run();
         Solution solution = new Solution();
-        System.out.println(solution.decToBaseK(34, 6));
-        System.out.println(solution.sumBase(34, 6));
-
-        System.out.println(solution.decToBaseK(10, 10));
-        System.out.println(solution.sumBase(10, 10));
+        System.out.println(solution.minTimeToVisitAllPoints(new int[][]{{1, 1}, {3, 4}, {-1, 0}}));
+        System.out.println(solution.minTimeToVisitAllPoints(new int[][]{{0, 0}, {3, 2}, {3, 4}, {-1, 0}}));
 
         System.out.println(new Date().getTime() - t + " ms");
     }
@@ -43,16 +40,16 @@ public class Main {
 
 }
 
+//1266 . Минимальное время посещения всех точек
 class Solution {
-    public int sumBase(int n, int k) {
-        return (n / k > 0 ? sumBase(n / k, k) : 0) + (n % k);
-    }
-
-    StringBuilder decToBaseK(int n, int k) {
-        return new StringBuilder()
-                .append(n / k > 0 ? decToBaseK(n / k, k) : "")
-                .append(n % k);
+    public int minTimeToVisitAllPoints(int[][] points) {
+        int summ = 0;
+        for (int i = 1; i < points.length; i++) {
+            int dx = Math.abs(points[i][0] - points[i - 1][0]);
+            int dy = Math.abs(points[i][1] - points[i - 1][1]);
+//            System.out.println(dx + "\t" + dy + "\t" + Math.max(dx, dy));
+            summ += Math.max(dx, dy);
+        }
+        return summ;
     }
 }
-
-
