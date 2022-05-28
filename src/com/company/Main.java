@@ -23,14 +23,16 @@ package com.company;
 import java.io.*;
 import java.util.*;
 
+// 976. Largest Perimeter Triangle
 public class Main {
     public static void main(String[] args) throws IOException {
         long t = new Date().getTime();
 //        new Main().run();
         Solution solution = new Solution();
-        System.out.println(solution.minTimeToVisitAllPoints(new int[][]{{1, 1}, {3, 4}, {-1, 0}}));
-        System.out.println(solution.minTimeToVisitAllPoints(new int[][]{{0, 0}, {3, 2}, {3, 4}, {-1, 0}}));
-
+        System.out.println(solution.largestPerimeter(new int[]{3, 2, 3, 4}));
+        System.out.println(solution.largestPerimeter(new int[]{3, 6, 2, 3}));
+        System.out.println(solution.largestPerimeter(new int[]{2, 1, 2}));
+        System.out.println(solution.largestPerimeter(new int[]{1, 2, 1}));
         System.out.println(new Date().getTime() - t + " ms");
     }
 
@@ -40,16 +42,15 @@ public class Main {
 
 }
 
-//1266 . Минимальное время посещения всех точек
 class Solution {
-    public int minTimeToVisitAllPoints(int[][] points) {
-        int summ = 0;
-        for (int i = 1; i < points.length; i++) {
-            int dx = Math.abs(points[i][0] - points[i - 1][0]);
-            int dy = Math.abs(points[i][1] - points[i - 1][1]);
-//            System.out.println(dx + "\t" + dy + "\t" + Math.max(dx, dy));
-            summ += Math.max(dx, dy);
+    public int largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length - 3;
+
+        while (n >= 0) {
+            if (nums[n] + nums[n + 1] > nums[n + 2]) return nums[n] + nums[n + 1] + nums[n + 2];
+            n--;
         }
-        return summ;
+        return 0;
     }
 }
